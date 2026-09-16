@@ -1,0 +1,20 @@
+Environments
+
+venv/
+env/
+.env
+
+Python Cache
+
+pycache/
+*.py[cod]
+*$py.class
+
+IDE configurations
+
+.vscode/
+.idea/
+
+Streamlit specific
+
+.streamlit/
