@@ -1,12 +1,20 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from datetime import datetime
-from backend.database import students_collection, logs_collection, init_db
-from backend.ai_scorer import score_log_text # (Yeh pichli file waisi hi rahegi)
+from backend.database import init_db, logs_collection
+from backend.ai_scorer import score_log_text
 
-app = FastAPI(title="Smart Internship API")
+app = FastAPI()
 
-class LogCreate(BaseModel):
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class LogEntry(BaseModel):
     student_id: str
     log_text: str
 
@@ -15,26 +23,27 @@ def startup_db():
     init_db()
 
 @app.post("/submit-log/")
-def submit_log(log: LogCreate):
-    # AI se log ka score nikalein
-    ai_result = score_log_text(log.log_text)
-    
-    # MongoDB mein document save karne ke liye dictionary banayein
-    log_document = {
-        "student_id": log.student_id,
-        "log_text": log.log_text,
-        "technical_score": ai_result["technical_score"],
-        "soft_skills_score": ai_result["soft_skills_score"],
-        "submitted_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    }
-    
-    logs_collection.insert_one(log_document)
-    
-    return {"message": "Log successfully analyzed and saved to MongoDB!", "score": ai_result}
+async def submit_log(entry: LogEntry):
+    try:
+        score = score_log_text(entry.log_text)
+        
+        log_data = {
+            "student_id": entry.student_id,
+            "log_text": entry.log_text,
+            "technical_score": score.get("technical_score", 0),
+            "soft_skills_score": score.get("soft_skills_score", 0)
+        }
+        logs_collection.insert_one(log_data)
+        
+        return {"message": "Log submitted successfully", "score": score}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/dashboard-data/")
-def get_dashboard_data():
-    # MongoDB se saara data fetch karein (_id field ko exclude karke kyunki wo JSON serializable nahi hota)
-    students = list(students_collection.find({}, {"_id": 0}))
-    logs = list(logs_collection.find({}, {"_id": 0}))
-    return {"students": students, "logs": logs}
+async def get_dashboard_data():
+    try:
+        logs = list(logs_collection.find({}, {"_id": 0}))
+        return {"logs": logs}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    

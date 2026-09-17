@@ -1,20 +1,11 @@
-Environments
-
+# Environments
 venv/
+.venv/
 env/
-.env
 
-Python Cache
+# Python Cache
+__pycache__/
+*.pyc
 
-pycache/
-*.py[cod]
-*$py.class
-
-IDE configurations
-
-.vscode/
-.idea/
-
-Streamlit specific
-
-.streamlit/
+# OS Files
+.DS_Store

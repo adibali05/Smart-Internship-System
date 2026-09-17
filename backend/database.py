@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import certifi
 
 # Yahan apna wahi purana MongoDB Atlas wala link rehne dena
-MONGO_URL = "mongodb+srv://adibmuzammilali_db_user:<PASSWORD>@cluster0.s8zrt8j.mongodb.net/?appName=Cluster0" 
+MONGO_URL = "mongodb+srv://adibmuzammilali_db_user:7NkYs5xl7os7zFPV@cluster0.s8zrt8j.mongodb.net/?appName=Cluster0" 
 
 # tlsCAFile use karne se SSL error hamesha ke liye solve ho jayega
 client = MongoClient(MONGO_URL, tlsCAFile=certifi.where())
@@ -19,3 +19,4 @@ def init_db():
             "company": "XYZ Corp",
         })
         print("MongoDB initialized with dummy data.")
+        

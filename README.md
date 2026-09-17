@@ -1,65 +1,23 @@
-🎓 Smart Internship Management & Monitoring System
+# 🎓 Smart Internship Management & Monitoring System
 
-An AI-powered Minimum Viable Product (MVP) designed to help institutions digitally monitor and manage the internship lifecycle of their students. This platform uses Natural Language Processing (NLP) to evaluate weekly student logs and provides a real-time dashboard for university administrators.
+An AI-powered, single-platform solution designed to help institutions digitally monitor, evaluate, and manage the complete internship lifecycle of students using Natural Language Processing (NLP).
 
-🚀 Key Features
+## 🚀 Key Features
+* **AI-Powered Log Evaluation:** Automatically scores weekly student text logs for technical depth and soft skills using HuggingFace NLP models.
+* **Animated Real-time Dashboard:** Interactive, sleek Dark Mode UI built with Tailwind CSS and Chart.js for instant analytics.
+* **Seamless REST API:** Fully asynchronous backend built with FastAPI (CORS enabled for cross-origin requests).
+* **Cloud Database:** Flexible NoSQL data storage handling unstructured logs efficiently.
 
-AI Log Scoring: Uses Hugging Face Zero-Shot Classification to evaluate student logs based on technical depth and problem-solving.
+## 🛠️ Tech Stack
+* **Frontend:** Custom HTML5, Tailwind CSS, Chart.js, Vanilla JS
+* **Backend:** FastAPI, Uvicorn
+* **Database:** MongoDB Atlas (Cloud NoSQL)
+* **AI/NLP Engine:** HuggingFace `transformers` (Zero-shot classification pipeline)
 
-Student Portal: A simple interface for students to select their profile and submit weekly progress logs.
+## ⚙️ How to Run Locally
 
-Admin Dashboard: A real-time tracker for university staff to monitor which students are excelling and which need intervention (Red Flag system).
-
-Automated Feedback: Generates instant AI feedback for students upon log submission.
-
-🛠️ Tech Stack
-
-Backend: FastAPI (Python)
-
-Frontend: Streamlit
-
-AI/NLP Engine: Hugging Face transformers (DistilBART)
-
-Database: SQLite & SQLAlchemy
-
-💻 How to Run Locally
-
-1. Setup Virtual Environment
-
-python -m venv venv
-# Windows:
-.\venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
-
-
-2. Install Dependencies
-
+**1. Clone the repository and install dependencies:**
+```bash
+git clone [https://github.com/adibali05/Smart-Internship-System.git](https://github.com/adibali05/Smart-Internship-System.git)
+cd Smart-Internship-System
 pip install -r requirements.txt
-
-
-3. Start the Backend API (FastAPI)
-
-Run this command in your terminal. It will start the API server on http://127.0.0.1:8000.
-
-uvicorn backend.main:app --reload
-
-
-Note: The first time you run this, it will download the Hugging Face AI model (approx 1.5 GB). Please be patient.
-
-4. Start the Frontend Dashboard (Streamlit)
-
-Open a new terminal tab, activate the environment again, and run:
-
-streamlit run frontend/app.py
-
-
-This will automatically open the dashboard in your web browser.
-
-📌 Future Scope
-
-Integration of Geo-fenced mobile attendance tracking.
-
-Automated tripartite agreement generation via digital signatures.
-
-Matching algorithm to connect students with employer job postings.
